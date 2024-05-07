@@ -1,0 +1,39 @@
+import robocode.*;
+
+public class MeuRoboDefensivo extends Robot {
+    
+    public void run() {
+        // Defina as cores do robô
+        setBodyColor(java.awt.Color.black);
+        setGunColor(java.awt.Color.black);
+        setRadarColor(java.awt.Color.black);
+        setBulletColor(java.awt.Color.black);
+        setScanColor(java.awt.Color.black);
+        
+        // Gire a arma e o radar independentemente
+        setAdjustGunForRobotTurn(true);
+        setAdjustRadarForGunTurn(true);
+
+        // Loop principal do robô
+        while (true) {
+            // Gire o radar para procurar inimigos
+            turnRadarRight(360);
+        }
+    }
+
+    public void onScannedRobot(ScannedRobotEvent e) {
+        // Quando um inimigo é escaneado
+        double enemyDistance = e.getDistance();
+
+        // Gire o robô para enfrentar o inimigo
+        turnRight(e.getBearing());
+
+        // Atire no inimigo
+        fire(2);
+
+        // Se o inimigo estiver muito próximo, recue
+        if (enemyDistance < 200) {
+            ahead(-50);
+        }
+    }
+}
